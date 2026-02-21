@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação Completa - Seu Suporte</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        /* Barra 1: Menu de Páginas */
+        .barra-paginas {
+            background-color: #1a2b4c; /* Azul Marinho da Marca */
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 101;
+        }
+        
+        .barra-paginas button {
+            background-color: transparent;
+            color: #b0bec5;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+        }
+        
+        .barra-paginas button.ativo, .barra-paginas button:hover {
+            color: white;
+            border-bottom: 3px solid #ff5722; /* Laranja da Marca */
+        }
+
+        /* Barra 2: Menu de Dispositivos */
+        .barra-dispositivos {
+            background-color: #ffffff;
+            padding: 10px;
+            position: sticky;
+            top: 55px; /* Fica logo abaixo da primeira barra */
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #ddd;
+        }
+
+        .barra-dispositivos button {
+            background-color: #e9ecef;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 6px 14px;
+            margin: 0 4px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .barra-dispositivos button.ativo, .barra-dispositivos button:hover {
+            background-color: #ff5722;
+            color: white;
+            border-color: #ff5722;
+        }
+
+        /* Container da Imagem */
+        .container-layout {
+            margin: 40px auto;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+            background-color: white;
+            transition: max-width 0.4s ease;
+            min-height: 500px; /* Evita a tela pular enquanto a imagem carrega */
+        }
+
+        .container-layout img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Larguras das Telas */
+        .tela-mobile { max-width: 400px; }
+        .tela-tablet { max-width: 768px; }
+        .tela-laptop { max-width: 1024px; }
+        .tela-desktop { max-width: 1440px; }
+    </style>
+</head>
+<body>
+
+    <div class="barra-paginas">
+        <button onclick="mudarPagina('home')" class="btn-pg ativo" id="pg-home">Home</button>
+        <button onclick="mudarPagina('sobre')" class="btn-pg" id="pg-sobre">Quem Somos</button>
+        <button onclick="mudarPagina('servicos')" class="btn-pg" id="pg-servicos">Serviços</button>
+        <button onclick="mudarPagina('contato')" class="btn-pg" id="pg-contato">Contatos</button>
+    </div>
+
+    <div class="barra-dispositivos">
+        <button onclick="mudarTela('mobile')" class="btn-tela" id="tl-mobile">📱 Mobile</button>
+        <button onclick="mudarTela('tablet')" class="btn-tela" id="tl-tablet">💊 Tablet</button>
+        <button onclick="mudarTela('laptop')" class="btn-tela" id="tl-laptop">💻 Laptop Base</button>
+        <button onclick="mudarTela('desktop')" class="btn-tela ativo" id="tl-desktop">🖥️ Desktop Padrão</button>
+    </div>
+
+    <div class="container-layout tela-desktop" id="moldura">
+        <img src="home-desktop.png" id="imagem-preview" alt="Preview do Layout">
+    </div>
+
+
+    <script>
+        // Variáveis que guardam o estado atual
+        let paginaAtual = 'home';
+        let telaAtual = 'desktop';
+
+        function atualizarImagem() {
+            // Constrói o nome do arquivo baseado nas escolhas. Ex: "sobre-mobile.jpg"
+            const nomeArquivo = paginaAtual + '-' + telaAtual + '.png';
+            document.getElementById('imagem-preview').src = nomeArquivo;
+        }
+
+        function mudarPagina(novaPagina) {
+            paginaAtual = novaPagina;
+
+            // Remove a classe 'ativo' de todos os botões de página
+            document.querySelectorAll('.btn-pg').forEach(btn => btn.classList.remove('ativo'));
+            // Adiciona a classe 'ativo' no botão clicado
+            document.getElementById('pg-' + novaPagina).classList.add('ativo');
+
+            atualizarImagem();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function mudarTela(novaTela) {
+            telaAtual = novaTela;
+
+            // Remove a classe 'ativo' de todos os botões de tela
+            document.querySelectorAll('.btn-tela').forEach(btn => btn.classList.remove('ativo'));
+            // Adiciona a classe 'ativo' no botão clicado
+            document.getElementById('tl-' + novaTela).classList.add('ativo');
+
+            // Ajusta a largura da moldura
+            const moldura = document.getElementById('moldura');
+            moldura.className = 'container-layout tela-' + novaTela;
+
+            atualizarImagem();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
